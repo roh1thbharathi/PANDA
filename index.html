@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hey Panda 🐼</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Page 1: The Ask -->
+    <div id="page-ask" class="page active">
+        <div class="content">
+            <div class="big-emoji bounce">🐼</div>
+            <h1>Hey Panda</h1>
+            <p class="subtitle">Wanna watch a movie with me tonight? 🎬🍿</p>
+            <div class="btn-row">
+                <button id="btn-yes" class="btn-yes" onclick="goToMovies()">Yes! 💖</button>
+                <button id="btn-no" class="btn-no">No 🙄</button>
+            </div>
+            <p id="no-gone" class="no-gone hidden">No is NOT an option, Panda 😂🐼</p>
+        </div>
+    </div>
+
+    <!-- Page 2: Movie Picker -->
+    <div id="page-movies" class="page">
+        <div class="content">
+            <div class="big-emoji">🎬</div>
+            <h2>Okay but which one? 👀</h2>
+            <div class="movies-grid">
+                <div class="movie-card" onclick="pickMovie('Crime 101')">
+                    <div class="card-emoji">🔫</div>
+                    <div class="card-title">Crime 101</div>
+                    <div class="card-desc">The streets don't sleep 🌃</div>
+                </div>
+                <div class="movie-card" onclick="pickMovie('Peaky Blinders: Immortal Man')">
+                    <div class="card-emoji">🎩</div>
+                    <div class="card-title">Peaky Blinders: Immortal Man</div>
+                    <div class="card-desc">By order of the Peaky Blinders ⚡</div>
+                </div>
+                <div class="movie-card" onclick="pickMovie(&quot;Lee Cronin's The Mummy&quot;)">
+                    <div class="card-emoji">🏺</div>
+                    <div class="card-title">Lee Cronin's The Mummy</div>
+                    <div class="card-desc">Unwrap the chaos 👁️</div>
+                </div>
+                <div class="movie-card bait" onclick="pickBait()">
+                    <div class="bait-glow"></div>
+                    <div class="card-emoji">💅</div>
+                    <div class="card-title">Ladies First ✨</div>
+                    <div class="card-desc">Totally your choice 🎀</div>
+                    <div class="bait-tag">for her 🩷</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page 3: Blocked (bait clicked) -->
+    <div id="page-blocked" class="page">
+        <div class="content">
+            <div class="meme-box">
+                <div class="meme-top">PANDA TRIES TO PICK LADIES FIRST</div>
+                <div class="big-emoji shake" style="font-size:110px;">🐼</div>
+                <div class="meme-bottom">NOT TODAY 🚫</div>
+            </div>
+            <p class="blocked-sub">Did you REALLY think that was gonna work? 😭💀</p>
+            <div class="blocked-icons">🚫 🐼 🚫</div>
+            <button class="btn-back" onclick="goToMovies()">Go back and pick properly 😤</button>
+        </div>
+    </div>
+
+    <!-- Page 4: Confirmation -->
+    <div id="page-confirm" class="page">
+        <div id="confetti-box"></div>
+        <div class="content">
+            <div class="big-emoji celebrate">🐼🎬🍿</div>
+            <h2>YESSS!! 🎉❤️</h2>
+            <div class="chosen-movie" id="chosen-title"></div>
+            <p class="msg-tonight">See you tonight 🐼❤️</p>
+            <p class="msg-discord">Come to Pappy on Discord.</p>
+            <p class="msg-now">Right. Now. 😤</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
