@@ -12,7 +12,7 @@
     <div id="page-ask" class="page active">
         <div class="content">
             <div class="big-emoji bounce">🐼</div>
-            <h1>Hey Panda</h1>
+            <h1 id="heading"></h1>
             <p class="subtitle">Wanna watch a movie with me tonight? 🎬🍿</p>
             <div class="btn-row">
                 <button id="btn-yes" class="btn-yes" onclick="goToMovies()">Yes! 💖</button>
@@ -59,7 +59,9 @@
         <div class="content">
             <div class="meme-box">
                 <div class="meme-top">PANDA TRIES TO PICK LADIES FIRST</div>
-                <div class="big-emoji shake" style="font-size:110px;">🐼</div>
+                <div class="meme-photo-wrap">
+                    <img src="images/sad.jpeg" onerror="this.style.display='none'">
+                </div>
                 <div class="meme-bottom">NOT TODAY 🚫</div>
             </div>
             <p class="blocked-sub">Did you REALLY think that was gonna work? 😭💀</p>
@@ -75,12 +77,13 @@
             <div class="big-emoji celebrate">🐼🎬🍿</div>
             <h2>YESSS!! 🎉❤️</h2>
             <div class="chosen-movie" id="chosen-title"></div>
+            <img class="confirm-photo" src="images/happy.jpeg" onerror="this.style.display='none'">
             <p class="msg-tonight">See you tonight 🐼❤️</p>
             <p class="msg-discord">Come to Pappy on Discord.</p>
             <p class="msg-now">Right. Now. 😤</p>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=2"></script>
 </body>
 </html>

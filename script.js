@@ -4,12 +4,19 @@ let isFixed = false;
 let cooldown = false;
 
 window.addEventListener('DOMContentLoaded', () => {
+    // Typewriter on heading
+    const text = 'Hey Panda';
+    let i = 0;
+    const h = document.getElementById('heading');
+    const type = () => {
+        if (i <= text.length) { h.textContent = text.slice(0, i++); setTimeout(type, 110); }
+    };
+    type();
+
     const btnNo = document.getElementById('btn-no');
-
-    btnNo.addEventListener('mouseenter', handleEscape);
-
+    btnNo.addEventListener('click', handleEscape);
     btnNo.addEventListener('touchstart', (e) => {
-        e.preventDefault();
+        e.preventDefault(); // prevents ghost click after touch
         handleEscape();
     }, { passive: false });
 });
@@ -20,6 +27,7 @@ function handleEscape() {
     setTimeout(() => { cooldown = false; }, 300);
 
     escapeCount++;
+    playWoosh();
     const btnNo = document.getElementById('btn-no');
 
     // On first escape: lock current visual position then go fixed
@@ -77,34 +85,125 @@ function teleportNo(btnNo) {
 }
 
 function spawnGhost(x, y) {
-    const g = document.createElement('span');
+    const g = document.createElement('div');
     g.className = 'panda-ghost';
-    g.textContent = '🐼';
+    g.innerHTML = '<img src="images/funny-3.jpeg" onerror="this.outerHTML=\'🐼\'">';
     g.style.left = x + 'px';
     g.style.top  = y + 'px';
     document.body.appendChild(g);
-    setTimeout(() => g.remove(), 950);
+    setTimeout(() => g.remove(), 2400);
 }
 
 // ─── Navigation ───────────────────────────────────────────
 
 function goToMovies() {
+    const a = new Audio('yes.mp4');
+    a.play().catch(() => {});
     showPage('page-movies');
 }
 
 function pickMovie(title) {
-    document.getElementById('chosen-title').textContent = title;
-    showPage('page-confirm');
-    launchConfetti();
+    playCardTap();
+    setTimeout(() => {
+        document.getElementById('chosen-title').textContent = title;
+        showPage('page-confirm');
+        launchConfetti();
+        playCheer();
+    }, 250);
 }
 
 function pickBait() {
-    showPage('page-blocked');
+    playCardTap();
+    setTimeout(() => {
+        playBlocked();
+        showPage('page-blocked');
+    }, 120);
 }
 
 function showPage(id) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.getElementById(id).classList.add('active');
+}
+
+// ─── Sounds (Web Audio API — no files needed) ─────────────
+
+let _ctx = null;
+function getCtx() {
+    try {
+        if (!_ctx) _ctx = new (window.AudioContext || window.webkitAudioContext)();
+        if (_ctx.state === 'suspended') _ctx.resume();
+        return _ctx;
+    } catch(e) { return null; }
+}
+
+function playWoosh() {
+    const ctx = getCtx(); if (!ctx) return;
+    const o = ctx.createOscillator();
+    const g = ctx.createGain();
+    o.connect(g); g.connect(ctx.destination);
+    o.frequency.setValueAtTime(900, ctx.currentTime);
+    o.frequency.exponentialRampToValueAtTime(60, ctx.currentTime + 0.35);
+    g.gain.setValueAtTime(0.5, ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.35);
+    o.start(); o.stop(ctx.currentTime + 0.35);
+}
+
+function playBlocked() {
+    const ctx = getCtx(); if (!ctx) return;
+    [440, 349, 294].forEach((freq, i) => {
+        const o = ctx.createOscillator();
+        const g = ctx.createGain();
+        o.type = 'sawtooth';
+        o.connect(g); g.connect(ctx.destination);
+        const t = ctx.currentTime + i * 0.28;
+        o.frequency.setValueAtTime(freq, t);
+        o.frequency.exponentialRampToValueAtTime(freq * 0.85, t + 0.25);
+        g.gain.setValueAtTime(0.3, t);
+        g.gain.exponentialRampToValueAtTime(0.001, t + 0.28);
+        o.start(t); o.stop(t + 0.3);
+    });
+}
+
+function playCheer() {
+    const ctx = getCtx(); if (!ctx) return;
+    [523, 659, 784, 1047].forEach((freq, i) => {
+        const o = ctx.createOscillator();
+        const g = ctx.createGain();
+        o.connect(g); g.connect(ctx.destination);
+        const t = ctx.currentTime + i * 0.12;
+        o.frequency.setValueAtTime(freq, t);
+        g.gain.setValueAtTime(0.3, t);
+        g.gain.exponentialRampToValueAtTime(0.001, t + 0.18);
+        o.start(t); o.stop(t + 0.2);
+    });
+}
+
+function playMarioCoin() {
+    const ctx = getCtx(); if (!ctx) return;
+    [[988, 0, 0.065], [1319, 0.07, 0.28]].forEach(([freq, start, end]) => {
+        const o = ctx.createOscillator();
+        const g = ctx.createGain();
+        o.type = 'square';
+        o.connect(g); g.connect(ctx.destination);
+        o.frequency.setValueAtTime(freq, ctx.currentTime + start);
+        g.gain.setValueAtTime(0.25, ctx.currentTime + start);
+        g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + end);
+        o.start(ctx.currentTime + start);
+        o.stop(ctx.currentTime + end + 0.01);
+    });
+}
+
+function playCardTap() {
+    const ctx = getCtx(); if (!ctx) return;
+    const o = ctx.createOscillator();
+    const g = ctx.createGain();
+    o.type = 'sine';
+    o.connect(g); g.connect(ctx.destination);
+    o.frequency.setValueAtTime(520, ctx.currentTime);
+    o.frequency.exponentialRampToValueAtTime(260, ctx.currentTime + 0.14);
+    g.gain.setValueAtTime(0.4, ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.14);
+    o.start(); o.stop(ctx.currentTime + 0.14);
 }
 
 // ─── Confetti ─────────────────────────────────────────────
