@@ -63,6 +63,47 @@ body::before {
     z-index: 1;
 }
 
+/* ─── Page 1 hero photo ─── */
+.panda-hero {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto 18px;
+    border: 4px solid var(--pink);
+    box-shadow: 0 0 28px rgba(249, 168, 212, 0.45);
+}
+
+.panda-hero img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* ─── Floating decorations ─── */
+#deco-layer {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.deco {
+    position: absolute;
+    top: -60px;
+    pointer-events: none;
+    opacity: 0.55;
+    animation: deco-fall linear infinite;
+    user-select: none;
+}
+
+@keyframes deco-fall {
+    0%   { transform: translateY(0)      rotate(0deg);   }
+    100% { transform: translateY(105vh)  rotate(540deg); }
+}
+
 /* ─── Emojis ─── */
 .big-emoji {
     font-size: 80px;
@@ -182,6 +223,16 @@ h2 {
 @keyframes fadein {
     from { opacity: 0; transform: translateY(8px); }
     to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Page 2 flirty line ─── */
+.flirty-line {
+    font-size: 0.85rem;
+    color: var(--pink);
+    font-style: italic;
+    margin-bottom: 16px;
+    opacity: 0.85;
+    letter-spacing: 0.2px;
 }
 
 /* ─── Page 2 Movie Grid ─── */

@@ -4,6 +4,26 @@ let isFixed = false;
 let cooldown = false;
 
 window.addEventListener('DOMContentLoaded', () => {
+    // Floating bamboo + panda decorations
+    const decoLayer = document.createElement('div');
+    decoLayer.id = 'deco-layer';
+    document.body.appendChild(decoLayer);
+    const decoItems = [
+        '🐼','🐼','🐼','🐼','🐼','🐼','🐼','🐼',
+        '🐷','🐷','🐷','🐷','🐷',
+        '🎋','🎋','🎋','🎋','🎍','🎍','🎍','🎋','🎋'
+    ];
+    decoItems.forEach((emoji) => {
+        const el = document.createElement('span');
+        el.className = 'deco';
+        el.textContent = emoji;
+        el.style.left              = (Math.random() * 92) + '%';
+        el.style.animationDelay    = (Math.random() * 8) + 's';
+        el.style.animationDuration = (6 + Math.random() * 8) + 's';
+        el.style.fontSize          = (18 + Math.random() * 20) + 'px';
+        decoLayer.appendChild(el);
+    });
+
     // Typewriter on heading
     const text = 'Hey Panda';
     let i = 0;
@@ -99,6 +119,22 @@ function spawnGhost(x, y) {
 function goToMovies() {
     const a = new Audio('yes.mp4');
     a.play().catch(() => {});
+    showPage('page-movies');
+}
+
+function backToMovies() {
+    const ctx = getCtx();
+    if (ctx) {
+        const o = ctx.createOscillator();
+        const g = ctx.createGain();
+        o.type = 'sine';
+        o.connect(g); g.connect(ctx.destination);
+        o.frequency.setValueAtTime(320, ctx.currentTime);
+        o.frequency.exponentialRampToValueAtTime(220, ctx.currentTime + 0.12);
+        g.gain.setValueAtTime(0.18, ctx.currentTime);
+        g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.12);
+        o.start(); o.stop(ctx.currentTime + 0.13);
+    }
     showPage('page-movies');
 }
 

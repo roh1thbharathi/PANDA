@@ -11,7 +11,9 @@
     <!-- Page 1: The Ask -->
     <div id="page-ask" class="page active">
         <div class="content">
-            <div class="big-emoji bounce">🐼</div>
+            <div class="panda-hero bounce">
+                <img src="images/panda-entry.jpeg" onerror="this.outerHTML='<span style=font-size:80px>🐼</span>'">
+            </div>
             <h1 id="heading"></h1>
             <p class="subtitle">Wanna watch a movie with me tonight? 🎬🍿</p>
             <div class="btn-row">
@@ -25,6 +27,7 @@
     <!-- Page 2: Movie Picker -->
     <div id="page-movies" class="page">
         <div class="content">
+            <p class="flirty-line">i want to do that to you but you are far 💋👅</p>
             <div class="big-emoji">🎬</div>
             <h2>Okay but which one? 👀</h2>
             <div class="movies-grid">
@@ -66,7 +69,7 @@
             </div>
             <p class="blocked-sub">Did you REALLY think that was gonna work? 😭💀</p>
             <div class="blocked-icons">🚫 🐼 🚫</div>
-            <button class="btn-back" onclick="goToMovies()">Go back and pick properly 😤</button>
+            <button class="btn-back" onclick="backToMovies()">Go back and pick properly 😤</button>
         </div>
     </div>
 
